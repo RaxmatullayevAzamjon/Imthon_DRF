@@ -26,6 +26,12 @@ class AdminSerializer(serializers.ModelSerializer):
         model = Admin
         fields = "__all__"
 
+    def validate_ysh(self, qiymat):
+        if qiymat < "19":
+            return qiymat
+        raise ValidationError("Yoshingiz mos kelmaydi")
+
+
 class HaydovchiSerializer(serializers.ModelSerializer):
     class Meta:
         model = Haydovchi
@@ -38,7 +44,6 @@ class BuyurtmaSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def validate_qarz(self, qiymat):
-        qiymat = Buyurtma.mijoz__qarz
-        if qiymat < 500000:
+        if qiymat > 500000:
             return f"Qarzingiz {qiymat}"
         raise ValidationError("Qarzingiz juda ko'p, buyurtma qilolmaysiz")
